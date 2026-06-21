@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가민 바람 데이터 필드 (Wind Field) 사용자 가이드 & 설명서</title>
+    <meta name="description" content="가민 사이클링 컴퓨터용 Wind Field 데이터 필드의 에어로 효과, 돛(Sailing) 효과 및 맞바람/옆바람 수치 측정 가이드">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --green: #10b981;
+            --red: #ef4444;
+            --orange: #f97316;
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: relative;
+            padding: 100px 20px 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 60%);
+        }
+
+        .header-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            border-radius: 20px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-logo svg {
+            width: 44px;
+            height: 44px;
+            fill: white;
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .grid-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 12px;
+        }
+
+        h2 svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--accent);
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-title {
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-icon-wrapper {
+            background: rgba(59, 130, 246, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .feature-icon-wrapper svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .device-mockup-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .sim-screen {
+            background: #1e293b;
+            border: 8px solid #475569;
+            border-radius: 36px;
+            width: 280px;
+            height: 400px;
+            padding: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sim-header {
+            font-family: var(--font-title);
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .sim-compass-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .sim-compass {
+            width: 140px;
+            height: 140px;
+            border: 2px solid #7886b4;
+            box-shadow: inset 0 0 0 2px #1e293b, inset 0 0 0 3px #7886b4;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sim-dir {
+            position: absolute;
+            font-family: var(--font-title);
+            font-size: 0.7rem;
+            color: #505e82;
+            font-weight: 700;
+        }
+
+        .sim-dir-f { top: -21px; left: 50%; transform: translateX(-50%); }
+        .sim-dir-b { bottom: -21px; left: 50%; transform: translateX(-50%); }
+        .sim-dir-r { right: -18px; top: 50%; transform: translateY(-50%); }
+        .sim-dir-l { left: -18px; top: 50%; transform: translateY(-50%); }
+
+        .sim-sailing-arcs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .sim-aero-bar-container {
+            height: 6px;
+            background: #12192d;
+            border: 1px solid #26304f;
+            border-radius: 3px;
+            position: relative;
+            margin: 6px auto 10px;
+            width: 180px;
+        }
+        .sim-aero-bar-center {
+            position: absolute;
+            left: 50%;
+            top: -2px;
+            bottom: -2px;
+            width: 1px;
+            background: #475569;
+        }
+        .sim-aero-bar-fill {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            border-radius: 2px;
+        }
+
+        .sim-arrow {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            transform: rotate(45deg);
+            transition: transform 0.5s ease;
+        }
+
+        .sim-data-grid {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 12px;
+            margin-top: auto;
+        }
+
+        .sim-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .sim-col {
+            flex: 1;
+            text-align: center;
+        }
+
+        .sim-label {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .sim-value {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sim-value.head { color: var(--red); }
+        .sim-value.cross { color: var(--accent); }
+        .sim-value.aero { color: var(--green); }
+
+        .sim-footer {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #94a3b8;
+            margin-top: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 20px;
+        }
+
+        .step-number {
+            background: var(--accent);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+        }
+
+        .step-content {
+            padding-top: 4px;
+        }
+
+        .step-content h3 {
+            font-family: var(--font-title);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .step-content p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .warning-box {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 4px solid var(--orange);
+            padding: 20px;
+            border-radius: 0 16px 16px 0;
+            margin-top: 24px;
+        }
+
+        .warning-title {
+            font-family: var(--font-title);
+            font-weight: 600;
+            color: var(--orange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 16px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            section {
+                padding: 24px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-logo" id="logo">
+        <svg viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2H12M12,4A8,8 0 0,1 20,12C20,13.76 19.43,15.38 18.46,16.7L12,11.5V6H11V11.8L5.27,16.5C4.46,15.2 4,13.66 4,12A8,8 0 0,1 12,4M12,13.5L16.5,17.1C15.3,18.3 13.73,19 12,19C10.27,19 8.7,18.3 7.5,17.1L12,13.5Z"/>
+        </svg>
+    </div>
+    <h1>바람 데이터 필드 (Wind Field)</h1>
+    <p class="subtitle">가민 사이클링 컴퓨터를 위한 실시간 풍향/풍속 분석 및 에어로 효과 측정 솔루션</p>
+    <div class="badge-container">
+        <div class="badge" id="badge-version">버전 1.0.0</div>
+        <div class="badge" id="badge-devices">Edge 530 / 1030 Plus 지원</div>
+        <div class="badge" id="badge-api">Connect IQ 3.2.0+</div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="grid-sections">
+        
+        <!-- 소개 섹션 -->
+        <section id="section-intro">
+            <h2>
+                <svg viewBox="0 0 24 24"><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/></svg>
+                소개 (Introduction)
+            </h2>
+            <p>
+                <strong>바람 데이터 필드 (Wind Field)</strong>는 가민 자전거 속도계의 공식 날씨 API와 GPS 센서를 연동하여 라이더가 주행하는 도중 실시간으로 어떤 방향에서 어떤 속도의 바람을 맞고 있는지를 직관적으로 보여주는 프리미엄 데이터 필드입니다.
+            </p>
+            <p>
+                단순히 풍향과 풍속을 숫자로 보여주는 것을 넘어, 자전거 주행 역학(Aero Drag dynamics)을 적용한 <strong>에어로 저항 변화 수치</strong> 및 순풍을 타고 나아가는 <strong>돛(Sailing) 효과 검출</strong> 기능을 제공하여 더 효율적인 페이싱과 기어비를 선택할 수 있게 돕습니다.
+            </p>
+        </section>
+
+        <!-- 핵심 기능 섹션 -->
+        <section id="section-features">
+            <h2>
+                <svg viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.35 19.43,11.03L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.48,2.42C14.44,2.18 14.24,2 14,2H10C9.76,2 9.56,2.18 9.52,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11.03C4.53,11.35 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.52,21.58C9.56,21.82 9.76,22 10,22H14C14.24,22 14.44,21.82 14.48,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+                핵심 기능 (Key Features)
+            </h2>
+            <div class="features-grid">
+                
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <div class="feature-icon-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+                        </div>
+                        동적 360° 풍향계
+                    </div>
+                    <p style="font-size: 0.95rem;">나의 진행 방향을 기준으로 상대적인 바람이 불어 나가는 방향을 나침반 원반과 화살표로 실시간 표시합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <div class="feature-icon-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M12,18A6,6 0 1,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
+                        </div>
+                        에어로 드래그 지수
+                    </div>
+                    <p style="font-size: 0.95rem;">상대적 기류 각도(Yaw) 및 풍속 데이터를 자전거 에어로 다이나믹 계수(CdA)에 대입해 맞바람 저항 증감율(%)을 실시간 계산합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <div class="feature-icon-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M12,2C11.5,2 11,2.1 10.5,2.3L3.5,5.3C2.6,5.7 2,6.6 2,7.6V17.6C2,18.6 2.6,19.5 3.5,19.9L10.5,22.9C11,23.1 11.5,23.2 12,23.2C12.5,23.2 13,23.1 13.5,22.9L20.5,19.9C21.4,19.5 22,18.6 22,17.6V7.6C22,6.6 21.4,5.7 20.5,5.3L13.5,2.3C13,2.1 12.5,2 12,2M12,4.3L18.5,7.1L12,9.9L5.5,7.1L12,4.3M4,9.2L11,12.2V20.7L4,17.7V9.2M20,9.2V17.7L13,20.7V12.2L20,9.2Z"/></svg>
+                        </div>
+                        돛 효과 (SAIL) 검출
+                    </div>
+                    <p style="font-size: 0.95rem;">기류 각도가 자전거를 뒤나 옆에서 앞으로 밀어주는 각도(Yaw 45°~135°)에 있을 때 에어로 저항이 보너스로 작용하는 돛 효과 상태를 식별합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <div class="feature-icon-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2M12 4A8 8 0 0 1 20 12A8 8 0 0 1 12 20A8 8 0 0 1 4 12A8 8 0 0 1 12 4M12 6V12L16 14L15.2 15.2L11 13V6H12Z"/></svg>
+                        </div>
+                        자동 화면 레이아웃
+                    </div>
+                    <p style="font-size: 0.95rem;">자전거 컴퓨터 화면 분할 칸 크기(높이)에 따라 최적의 레이아웃(Full, Mid, Compact)으로 정보 밀도를 자동 튜닝합니다.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 화면 구성 & 그래픽 가이드 -->
+        <section id="section-graphics">
+            <h2>
+                <svg viewBox="0 0 24 24"><path d="M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                UI 가이드 및 디바이스 뷰
+            </h2>
+            <div class="device-mockup-section">
+                <p>가민 자전거 컴퓨터 화면에서 볼 수 있는 <strong>풀 레이아웃 (높이 320px 이상)</strong> 가이드 예시입니다.</p>
+                
+                <div class="sim-screen">
+                    <div class="sim-header">WIND DATA FIELD</div>
+                    <div class="sim-compass-container">
+                        <div class="sim-compass">
+                            <span class="sim-dir sim-dir-f">F</span>
+                            <span class="sim-dir sim-dir-b">B</span>
+                            <span class="sim-dir sim-dir-r">R</span>
+                            <span class="sim-dir sim-dir-l">L</span>
+                            <svg class="sim-sailing-arcs" viewBox="0 0 100 100">
+                                <path d="M 50 5 L 50 8 M 50 92 L 50 95 M 5 50 L 8 50 M 92 50 L 95 50" fill="none" stroke="#7886b4" stroke-width="1" />
+                                <path d="M 57.8 5.7 A 45 45 0 0 1 65.4 7.7" fill="none" stroke="#10b981" stroke-width="3" />
+                                <path d="M 42.2 5.7 A 45 45 0 0 0 34.6 7.7" fill="none" stroke="#10b981" stroke-width="3" />
+                            </svg>
+                            <!-- 바람이 진행 방향 기준 우측 후방 45도에서 불어오는 경우 (불어가는 각도 225도) -->
+                            <svg class="sim-arrow" viewBox="0 0 24 24" style="transform: rotate(225deg);">
+                                <path fill="#10b981" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="sim-data-grid">
+                        <div class="sim-row">
+                            <div class="sim-col">
+                                <div class="sim-label">뒷바람</div>
+                                <div class="sim-value">3.2 m/s</div>
+                            </div>
+                            <div class="sim-col" style="border-left: 1px solid rgba(255,255,255,0.1);">
+                                <div class="sim-label">옆바람 (우)</div>
+                                <div class="sim-value">3.2 m/s</div>
+                            </div>
+                        </div>
+                        <div class="sim-row">
+                            <div class="sim-col">
+                                <div class="sim-label" style="color: var(--green);">에어로 효과</div>
+                                <div class="sim-value aero">-8.5% (돛효과)</div>
+                                <div class="sim-aero-bar-container">
+                                    <div class="sim-aero-bar-center"></div>
+                                    <div class="sim-aero-bar-fill" style="width: 17%; right: 50%; background-color: var(--green);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sim-row">
+                            <div class="sim-col">
+                                <div class="sim-label">기류각 / 풍향</div>
+                                <div class="sim-value" style="font-size: 0.75rem;">풍향: 남동 (135°)   Yaw: 45°</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sim-footer">
+                        체감 18.5°  기온 20.0°  OWM
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 설치 및 연동 가이드 -->
+        <section id="section-installation">
+            <h2>
+                <svg viewBox="0 0 24 24"><path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.04C2.34,8.36 0,10.91 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.04M17,13L12,18L7,13H10V9H14V13H17Z"/></svg>
+                설치 및 셋업 가이드
+            </h2>
+            <div class="steps-container">
+                
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Connect IQ 스토어 검색 및 다운로드</h3>
+                        <p>휴대폰의 Garmin Connect IQ Store 앱을 켜고 "Wind Field" 또는 "바람 데이터 필드"를 검색하여 다운로드 및 설치합니다.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>데이터 화면 구성에 데이터 필드 추가</h3>
+                        <p>가민 본체에서 [설정] &gt; [활동 프로필] &gt; 프로필 선택 &gt; [데이터 화면] &gt; 화면 선택 &gt; 데이터 필드 추가 &gt; [Connect IQ] 카테고리에서 **Wind Field**를 선택하여 배치합니다.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>날씨 데이터 동기화 확인</h3>
+                        <p>가민 컴퓨터는 자체 인터넷 센서가 없으므로 연동된 휴대폰의 Garmin Connect 앱을 통해 날씨 동기화가 필요합니다. 동기화가 실패할 시 화면에 `NO WIND DATA`가 노출됩니다.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>GPS 확인 및 주행 시작</h3>
+                        <p>방향을 제대로 분석하려면 자전거가 움직여 GPS 진행 방향(Heading)이 제공되어야 합니다. 주행을 시작하면 자동으로 화살표가 동작합니다.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">
+                    <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M12,2L1,21H23L12,2M12,6L19.53,19H4.47L12,6M11,9V13H13V9H11M11,15V17H13V15H11Z"/></svg>
+                    주의사항 (Warning)
+                </div>
+                <p style="font-size: 0.95rem; margin-bottom: 0;">
+                    바람의 절대 각도는 가민 연동 날씨 스테이션의 최근 정보를 기초로 합니다. 따라서 급격한 산악 지형이나 장애물이 많은 도심지에서는 실제 느끼는 바람과 예보상의 바람 방향 차이가 발생할 수 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 개발자/설정 가이드 -->
+        <section id="section-settings">
+            <h2>
+                <svg viewBox="0 0 24 24"><path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
+                설정 및 라이선스 등록
+            </h2>
+            <p>
+                라이선스 키를 등록하여 무료 체험판(Trial 14일) 제한을 풀고 프리미엄 버전을 영구히 활성화할 수 있습니다.
+            </p>
+            <div class="code-block">
+1. 휴대폰의 [Garmin Connect] 앱 실행
+2. [장치] > [Connect IQ 앱] > [데이터 필드] > [Wind Field] 선택
+3. [설정 (Settings)] 버튼 터치
+4. 'License Key' 설정 항목에 구매한 키 입력 (형식: WF-XXXXXX-YY)
+5. 가민 기기 동기화 진행
+            </div>
+            <p>설정이 올바르게 완료되면 데이터 필드 우상단의 `TRIAL` 또는 `PRO?` 배지가 사라지고 전체 에어로 분석 기능이 평생 잠금 해제됩니다.</p>
+        </section>
+
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Wind Field. All Rights Reserved. 개발팀: Antigravity AI</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wind Field — 바람을 읽는 라이더의 데이터 필드 | Garmin Edge 1030 Plus</title>
+<meta name="description" content="GPS 진행 방향과 실시간 바람을 비교해 맞바람·뒷바람·옆바람을 한 화면에 보여주는 Garmin Edge 데이터 필드. 나침반 화살표, Aero 효과, 세일링 스윗스팟, 기온까지.">
+<style>
+  :root{
+    --bg:#05080f; --panel:#0d1424; --panel2:#111a2e; --line:#26304f;
+    --fg:#eef2fb; --mut:#9aa6c8; --accent:#ff4d4d; --green:#37d67a;
+    --orange:#ff8a00; --yellow:#ffb020; --blue:#4da3ff; --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Pretendard","Segoe UI","Malgun Gothic",system-ui,sans-serif;
+    background:var(--bg);color:var(--fg);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  a{color:inherit;text-decoration:none}
+  section{padding:84px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+  h3{font-size:19px;font-weight:700;margin-bottom:6px}
+  .lead{color:var(--mut);font-size:18px;max-width:680px}
+  .eyebrow{color:var(--blue);font-weight:700;letter-spacing:.08em;font-size:13px;text-transform:uppercase;margin-bottom:12px}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(900px 500px at 80% -10%,rgba(77,163,255,.16),transparent 60%),
+      radial-gradient(700px 460px at 10% 110%,rgba(255,77,77,.12),transparent 60%),
+      var(--bg);
+  }
+  .hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:96px 0 88px}
+  .hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:850;letter-spacing:-.03em;line-height:1.12}
+  .hero h1 b{color:var(--accent)}
+  .hero h1 .g{color:var(--green)}
+  .hero p{margin-top:20px;color:var(--mut);font-size:19px;max-width:520px}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--mut)}
+  .chip b{color:var(--fg)}
+  .cta-row{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .btn{padding:13px 22px;border-radius:12px;font-weight:700;font-size:15px;border:1px solid transparent;cursor:pointer}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{background:transparent;border-color:var(--line);color:var(--fg)}
+  .hero-shot{justify-self:center;position:relative}
+  .device{
+    width:268px;border-radius:26px;padding:14px 12px 18px;
+    background:linear-gradient(#1b2438,#0c1322);border:1px solid #2c3a5e;
+    box-shadow:0 30px 70px rgba(0,0,0,.55);
+  }
+  .device img{width:100%;display:block;border-radius:10px}
+  .device .nub{height:7px;width:46px;background:#2c3a5e;border-radius:6px;margin:0 auto 11px}
+  .float{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:12.5px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+  .float .k{color:var(--mut);font-size:11px}
+  .f1{top:24px;left:-46px}
+  .f2{bottom:40px;right:-40px}
+
+  /* ---------- FEATURE GRID ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .card .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;margin-bottom:14px;background:var(--panel2)}
+  .card p{color:var(--mut);font-size:14.5px}
+
+  /* ---------- GALLERY ---------- */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+  .shot{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+  .shot img{width:100%;border-radius:8px;display:block;margin-bottom:10px}
+  .shot .t{font-weight:700;font-size:14px}
+  .shot .d{color:var(--mut);font-size:12.5px;margin-top:2px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;margin-top:8px}
+  .tag.red{background:rgba(255,77,77,.16);color:#ff8a8a}
+  .tag.green{background:rgba(55,214,122,.16);color:#7ee6a8}
+  .tag.orange{background:rgba(255,138,0,.16);color:#ffb87a}
+
+  /* ---------- HOW ---------- */
+  .how{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center;margin-top:30px}
+  .steps li{list-style:none;display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
+  .steps .n{flex:0 0 30px;height:30px;border-radius:9px;background:var(--panel2);display:grid;place-items:center;font-weight:800;color:var(--blue)}
+  .legend{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .legend .row{display:flex;align-items:center;gap:12px;padding:9px 0}
+  .swatch{width:14px;height:14px;border-radius:4px;flex:0 0 14px}
+
+  /* ---------- PRICING ---------- */
+  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative}
+  .tier.feat{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .tier .name{font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+  .tier .amt{font-size:34px;font-weight:850;margin:8px 0 2px}
+  .tier .sub{color:var(--mut);font-size:13.5px;min-height:20px}
+  .tier ul{list-style:none;margin-top:18px}
+  .tier li{padding:7px 0;font-size:14.5px;border-top:1px solid var(--line);display:flex;gap:9px}
+  .tier li::before{content:"✓";color:var(--green);font-weight:800}
+  .tier li.no{color:var(--mut)}
+  .tier li.no::before{content:"–";color:var(--mut)}
+  .ribbon{position:absolute;top:-12px;right:18px;background:var(--accent);color:#fff;font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:999px}
+
+  /* ---------- FAQ ---------- */
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:12px}
+  .faq summary{cursor:pointer;font-weight:700;padding:16px 0;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";float:right;color:var(--mut)}
+  .faq details[open] summary::after{content:"–"}
+  .faq p{color:var(--mut);padding:0 0 16px;font-size:14.5px}
+
+  footer{padding:48px 0;color:var(--mut);font-size:13.5px;text-align:center}
+  .disclaimer{margin-top:10px;font-size:12px;opacity:.7;max-width:680px;margin-left:auto;margin-right:auto}
+
+  @media(max-width:880px){
+    .hero-inner{grid-template-columns:1fr;gap:40px}
+    .grid,.price{grid-template-columns:1fr}
+    .gal{grid-template-columns:repeat(2,1fr)}
+    .how{grid-template-columns:1fr}
+    .float{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">Garmin Edge 1030 Plus · Connect IQ 데이터 필드</div>
+      <h1>지금 부는 바람이<br><b>내 편</b>인지 <span class="g">적</span>인지,<br>한 화면에.</h1>
+      <p>GPS 진행 방향과 실시간 바람을 비교해 <b>맞바람·뒷바람·옆바람</b>을 즉시 분해하고,
+         라이더 시점 나침반 화살표로 보여줍니다. 페이스 조절도, 포지션 선택도 데이터로.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#price">14일 무료로 시작하기</a>
+        <a class="btn ghost" href="#shots">실제 화면 보기</a>
+      </div>
+      <div class="badges">
+        <span class="chip">⛰ <b>맞/뒷/옆바람</b> 실시간 분해</span>
+        <span class="chip">🧭 라이더 시점 <b>나침반 화살표</b></span>
+        <span class="chip">🌡 <b>기온·체감</b> 동시 표시</span>
+        <span class="chip">🛟 오프라인 동작 (예보 동기화)</span>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <div class="device">
+        <div class="nub"></div>
+        <img src="screenshots/headwind.png" alt="Wind Field 맞바람 화면">
+      </div>
+      <div class="float f1"><div class="k">맞바람</div><b>6.0 m/s ↓</b></div>
+      <div class="float f2"><div class="k">옆바람 (우)</div><b>CROSS R</b></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== WHY ===================== -->
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow">왜 Wind Field 인가</div>
+    <h2>속도계는 "얼마나 빠른지"만 알려줍니다.<br>Wind Field는 "왜 그런지"를 알려줍니다.</h2>
+    <p class="lead">같은 파워인데 갑자기 느려졌다면, 십중팔구 바람입니다.
+       맞바람이면 무리하지 말고, 뒷바람이면 밀어붙이고, 옆바람이면 핸들을 잡으세요.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="ic">🎯</div>
+        <h3>한눈에 읽히는 화살표</h3>
+        <p>화면 위가 항상 내 진행 방향. 화살표가 아래로 향하면 맞바람(빨강), 위로 향하면 뒷바람(초록). 길이는 바람 세기에 비례합니다.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📐</div>
+        <h3>벡터 분해 수치</h3>
+        <p>바람을 <b>맞바람 성분</b>과 <b>옆바람 성분</b>으로 분리. 좌/우 옆바람 방향과 Yaw(기류각)까지 숫자로 제공합니다.</p>
+      </div>
+      <div class="card">
+        <div class="ic">💨</div>
+        <h3>Aero 효과 & 세일링</h3>
+        <p>현재 바람이 공기저항에 주는 영향을 막대 게이지로. 옆바람이 추진력으로 바뀌는 "세일링 스윗스팟"도 표시합니다.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🌡</div>
+        <h3>기온 · 체감온도</h3>
+        <p>기온과 체감온도를 함께 표시해 복장·수분 보충 판단을 돕습니다. 무료 티어에서도 제공.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🛟</div>
+        <h3>오프라인에서도 동작</h3>
+        <p>기기에 동기화된 예보 데이터를 사용해 신호가 없어도 작동. 프리미엄은 OpenWeatherMap 실시간 갱신도 지원합니다.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🌐</div>
+        <h3>한국어 · 단위 선택</h3>
+        <p>기기 언어가 한국어면 자동으로 한글 표기. km/h · mph · m/s 단위를 자유롭게 선택할 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GALLERY ===================== -->
+<section id="shots">
+  <div class="wrap">
+    <div class="eyebrow">실제 화면 · Edge 1030 Plus (282×470)</div>
+    <h2>상황마다 색과 화살표가 바뀝니다</h2>
+    <p class="lead">아래는 실제 레이아웃과 계산식을 그대로 렌더링한 화면입니다.</p>
+    <div class="gal">
+      <div class="shot">
+        <img src="screenshots/headwind.png" alt="정면 맞바람">
+        <div class="t">정면 맞바람</div>
+        <div class="d">화살표 ↓ · 정면 저항</div>
+        <span class="tag red">HEADWIND</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/tailwind.png" alt="뒷바람">
+        <div class="t">뒷바람</div>
+        <div class="d">화살표 ↑ · 후방 가속</div>
+        <span class="tag green">TAILWIND</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/tailwind_strong.png" alt="강한 뒷바람">
+        <div class="t">강한 뒷바람</div>
+        <div class="d">Aero 이득 (초록 막대)</div>
+        <span class="tag green">GAIN</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/headwind_light.png" alt="약한 맞바람">
+        <div class="t">약한 맞바람</div>
+        <div class="d">노란색 단계 색상</div>
+        <span class="tag orange">LIGHT</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/crosswind.png" alt="대각 옆바람">
+        <div class="t">대각 옆+맞바람</div>
+        <div class="d">우측 대각 · 주황</div>
+        <span class="tag orange">CROSS</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/crosswind_pure.png" alt="순수 옆바람">
+        <div class="t">순수 옆바람 (90°)</div>
+        <div class="d">맞바람 0 · 측면 강풍</div>
+        <span class="tag orange">CROSS 90°</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/sailing.png" alt="세일링 스윗스팟">
+        <div class="t">세일링 스윗스팟</div>
+        <div class="d">Yaw 10~20° 추진 구간</div>
+        <span class="tag green">SAIL</span>
+      </div>
+      <div class="shot">
+        <img src="screenshots/tailwind.png" alt="단위 m/s 표시">
+        <div class="t">단위 선택</div>
+        <div class="d">km/h · mph · m/s</div>
+        <span class="tag green">UNITS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow">어떻게 작동하나요</div>
+    <h2>설치하고 달리기만 하면 됩니다</h2>
+    <div class="how">
+      <ul class="steps">
+        <li><span class="n">1</span><div><h3>Connect IQ에서 추가</h3><p>스토어에서 Wind Field를 받아 활동 프로필 데이터 화면에 필드로 추가합니다.</p></div></li>
+        <li><span class="n">2</span><div><h3>날씨 동기화</h3><p>Garmin Connect 앱이 동기화되면 최신 예보 바람·기온이 기기에 들어옵니다.</p></div></li>
+        <li><span class="n">3</span><div><h3>GPS 픽스 후 출발</h3><p>달리기 시작하면 진행 방향이 잡히고, 바람 화살표가 실시간으로 움직입니다.</p></div></li>
+        <li><span class="n">4</span><div><h3>색으로 판단</h3><p>빨강이면 아끼고, 초록이면 밀어붙이고, 주황이면 핸들을 단단히.</p></div></li>
+      </ul>
+      <div class="legend">
+        <h3 style="margin-bottom:10px">색상 가이드</h3>
+        <div class="row"><span class="swatch" style="background:var(--accent)"></span> 맞바람 — 정면 저항 (강할수록 빨강)</div>
+        <div class="row"><span class="swatch" style="background:var(--orange)"></span> 중간 세기 / 옆바람 주의</div>
+        <div class="row"><span class="swatch" style="background:var(--yellow)"></span> 약한 바람</div>
+        <div class="row"><span class="swatch" style="background:var(--green)"></span> 뒷바람 — 후방 가속 (이득)</div>
+        <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+        <p style="color:var(--mut);font-size:13.5px">방위 규약: 화면 위 = 내 진행 방향. 화살표는 바람이 <b>불어가는</b> 방향을 가리킵니다.
+           relAngle 0° = 정면 맞바람, 180° = 정후방 뒷바람.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section id="price">
+  <div class="wrap">
+    <div class="eyebrow">요금</div>
+    <h2>무료로 시작, 필요하면 평생 프리미엄</h2>
+    <p class="lead">설치하면 <b>14일간 모든 프리미엄 기능</b>이 자동 개방됩니다. 차이를 직접 느껴 보세요.</p>
+    <div class="price">
+      <div class="tier">
+        <div class="name">Free</div>
+        <div class="amt">₩0</div>
+        <div class="sub">영구 무료 · 핵심 기능</div>
+        <ul>
+          <li>맞/뒷바람 화살표 + 수치</li>
+          <li>기온 · 체감온도</li>
+          <li>단위 선택 (km/h·mph·m/s)</li>
+          <li class="no">옆바람 · Yaw 각도</li>
+          <li class="no">강도별 단계 색상</li>
+          <li class="no">실시간 온라인 날씨</li>
+        </ul>
+      </div>
+      <div class="tier feat">
+        <div class="ribbon">가장 인기</div>
+        <div class="name" style="color:var(--accent)">Premium</div>
+        <div class="amt">$3.99</div>
+        <div class="sub">평생 1회 결제 · 런칭 할인 $1.99</div>
+        <ul>
+          <li>Free의 모든 기능</li>
+          <li><b>옆바람 + Yaw 각도</b></li>
+          <li><b>Aero 효과 게이지</b> & 세일링</li>
+          <li>강도별 단계 색상존</li>
+          <li>OpenWeatherMap 실시간 갱신</li>
+          <li>광고/배지 없음</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="name">Trial</div>
+        <div class="amt">14일</div>
+        <div class="sub">설치 시 자동 시작</div>
+        <ul>
+          <li>전 프리미엄 기능 개방</li>
+          <li>우상단 <b>TRIAL Nd</b> 배지</li>
+          <li>신용카드 불필요</li>
+          <li>만료 후 Free로 자동 전환</li>
+          <li>키 입력 시 즉시 평생 전환</li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:var(--mut);font-size:13px;margin-top:18px">
+      결제는 외부 플랫폼(Gumroad/Lemon Squeezy)에서 진행되며, 발급받은 라이선스 키
+      <code>WF-XXXXXX-YY</code>를 Garmin Connect 앱의 데이터 필드 설정에 입력하면 오프라인으로 즉시 활성화됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" class="faq">
+  <div class="wrap">
+    <div class="eyebrow">자주 묻는 질문</div>
+    <h2>궁금한 점</h2>
+    <details open>
+      <summary>바람 데이터는 어디서 오나요?</summary>
+      <p>기본은 기기에 동기화된 Garmin 예보 데이터(Weather API)입니다. 신호가 없어도 동작하지만 예보 기반이라 국지적 돌풍과는 차이가 있을 수 있습니다. 프리미엄에서는 본인 OpenWeatherMap API 키로 실시간 관측값을 더 자주 갱신할 수 있습니다.</p>
+    </details>
+    <details>
+      <summary>어떤 기기에서 쓸 수 있나요?</summary>
+      <p>현재 Garmin Edge 1030 Plus를 공식 지원합니다(282×470 해상도 최적화). 다른 Edge 모델은 manifest에 product id를 추가해 확장할 수 있으며, Weather API 특성상 Connect IQ 3.2.0 이상이 필요합니다.</p>
+    </details>
+    <details>
+      <summary>정지하거나 느릴 때는요?</summary>
+      <p>진행 방향(heading)은 GPS 코스 기반이라 정지·저속에서는 부정확할 수 있습니다. 이때는 마지막 유효 값을 유지하며, GPS가 잡히지 않으면 "NEED GPS / MOVE"를 표시합니다.</p>
+    </details>
+    <details>
+      <summary>구매한 키를 다른 기기에서도 쓸 수 있나요?</summary>
+      <p>라이선스 키는 오프라인 검증 방식이라 본인 소유 기기에 동일 키를 입력해 사용할 수 있습니다. 키는 Garmin Connect 앱 설정에 한 번만 입력하면 됩니다.</p>
+    </details>
+    <details>
+      <summary>환불이 되나요?</summary>
+      <p>14일 무료 트라이얼로 모든 프리미엄 기능을 먼저 체험할 수 있어, 구매 전 충분히 확인 가능합니다. 결제 후 환불은 사용한 외부 결제 플랫폼 정책을 따릅니다.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>Wind Field</strong> — Headwind / Tailwind / Crosswind data field for Garmin Edge.
+    <div class="disclaimer">
+      바람·기온은 예보 기반 추정치이며 실제 국지 기상과 다를 수 있습니다. Aero 효과 수치는 단순화된 공기저항 모델에 기반한 참고 지표입니다.
+      라이딩 중에는 화면을 과도하게 주시하지 말고 안전에 유의하세요. Garmin 및 Edge는 Garmin Ltd.의 상표입니다.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
