@@ -126,25 +126,28 @@
     Wind Field
   </div>
   <div class="links">
-    <a href="#how">작동 원리</a><a href="#shots">화면</a><a href="#usage">사용법</a>
-    <a href="#data">데이터 출처</a><a href="#plans">요금</a><a href="#faq">FAQ</a>
+    <a href="#how" data-i18n="nav.how">작동 원리</a><a href="#shots" data-i18n="nav.shots">화면</a><a href="#usage" data-i18n="nav.usage">사용법</a>
+    <a href="#data" data-i18n="nav.data">데이터 출처</a><a href="#plans" data-i18n="nav.plans">요금</a><a href="#faq">FAQ</a>
   </div>
-  <a class="btn" href="#plans" style="padding:10px 18px">설치</a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button id="langBtn" type="button" aria-label="Language" style="background:transparent;border:1px solid var(--line);color:var(--fg);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer">EN</button>
+    <a class="btn" href="#plans" style="padding:10px 18px" data-i18n="nav.install">설치</a>
+  </div>
 </div></nav>
 
 <!-- HERO -->
 <header class="hero"><div class="wrap">
   <div>
-    <span class="pill">GARMIN EDGE 1030 PLUS · 데이터 필드</span>
-    <h1>지금 부는 바람이<br><b>내 편인지 적인지</b>,<br>한눈에.</h1>
-    <p class="lead">GPS 진행 방향과 실시간 바람을 비교해
+    <span class="pill" data-i18n="hero.pill">GARMIN EDGE 1030 PLUS · 데이터 필드</span>
+    <h1 data-i18n="hero.title">지금 부는 바람이<br><b>내 편인지 적인지</b>,<br>한눈에.</h1>
+    <p class="lead" data-i18n="hero.lead">GPS 진행 방향과 실시간 바람을 비교해
       <b style="color:var(--head)">맞바람</b>·<b style="color:var(--tail)">뒷바람</b>·옆바람을
       화살표로, <b>체감온도</b>까지 한 화면에. 페이스도 추월 타이밍도 데이터로.</p>
     <div class="cta">
-      <a class="btn" href="#plans">14일 무료로 체험</a>
-      <a class="btn ghost" href="#how">작동 원리 보기</a>
+      <a class="btn" href="#plans" data-i18n="hero.cta1">14일 무료로 체험</a>
+      <a class="btn ghost" href="#how" data-i18n="hero.cta2">작동 원리 보기</a>
     </div>
-    <p class="note">설치 즉시 전 기능 14일 개방 · 카드 불필요 · 평생 라이선스 런칭가 $1.99 <s style="opacity:.6">$3</s></p>
+    <p class="note" data-i18n="hero.note">설치 즉시 전 기능 14일 개방 · 카드 불필요 · 평생 라이선스 런칭가 $1.99 <s style="opacity:.6">$3</s></p>
   </div>
   <img class="heroshot" src="data:image/png;base64,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" alt="Wind Field 데이터 필드 - 맞바람 화면">
 </div></header>
@@ -152,22 +155,22 @@
 <!-- HOW -->
 <section id="how">
   <div class="wrap">
-    <span class="eyebrow" style="display:block;text-align:center">How it works</span>
-    <h2>어떻게 작동하나요?</h2>
-    <p class="sub">기기에 동기화된(또는 온라인) 날씨의 풍향·풍속과, GPS로 측정한 내 진행 방향을 매초 비교합니다.</p>
+    <span class="eyebrow" style="display:block;text-align:center" data-i18n="how.eyebrow">How it works</span>
+    <h2 data-i18n="how.h2">어떻게 작동하나요?</h2>
+    <p class="sub" data-i18n="how.sub">기기에 동기화된(또는 온라인) 날씨의 풍향·풍속과, GPS로 측정한 내 진행 방향을 매초 비교합니다.</p>
     <div class="grid3">
-      <div class="card"><div class="ico">🧭</div><h3>진행 방향</h3>
-        <p>GPS course(heading)를 실시간으로 읽어 화면 위쪽을 항상 "내가 가는 방향"으로 고정합니다.</p></div>
-      <div class="card"><div class="ico">🌬️</div><h3>바람 + 기온</h3>
-        <p>풍향(불어오는 방향)·풍속과 기온·체감온도를 가져와 라이더 기준으로 변환합니다.</p></div>
-      <div class="card"><div class="ico">➡️</div><h3>충돌 시각화</h3>
-        <p>상대 각도로 맞/뒷/옆바람을 분해. 화살표 방향·색·길이로 영향의 세기를 즉시 전달합니다.</p></div>
+      <div class="card"><div class="ico">🧭</div><h3 data-i18n="how.c1h">진행 방향</h3>
+        <p data-i18n="how.c1p">GPS course(heading)를 실시간으로 읽어 화면 위쪽을 항상 "내가 가는 방향"으로 고정합니다.</p></div>
+      <div class="card"><div class="ico">🌬️</div><h3 data-i18n="how.c2h">바람 + 기온</h3>
+        <p data-i18n="how.c2p">풍향(불어오는 방향)·풍속과 기온·체감온도를 가져와 라이더 기준으로 변환합니다.</p></div>
+      <div class="card"><div class="ico">➡️</div><h3 data-i18n="how.c3h">충돌 시각화</h3>
+        <p data-i18n="how.c3p">상대 각도로 맞/뒷/옆바람을 분해. 화살표 방향·색·길이로 영향의 세기를 즉시 전달합니다.</p></div>
     </div>
     <div class="legend">
-      <span><b style="color:var(--head)">↓ 빨강</b> 맞바람(저항)</span>
-      <span><b style="color:var(--tail)">↑ 초록</b> 뒷바람(가속)</span>
-      <span><b style="color:var(--orange)">대각 주황</b> 옆+약한 맞바람</span>
-      <span>화살표 길이 = 바람 세기</span>
+      <span data-i18n="how.l1"><b style="color:var(--head)">↓ 빨강</b> 맞바람(저항)</span>
+      <span data-i18n="how.l2"><b style="color:var(--tail)">↑ 초록</b> 뒷바람(가속)</span>
+      <span data-i18n="how.l3"><b style="color:var(--orange)">대각 주황</b> 옆+약한 맞바람</span>
+      <span data-i18n="how.l4">화살표 길이 = 바람 세기</span>
     </div>
   </div>
 </section>
@@ -176,8 +179,8 @@
 <section id="shots" style="background:var(--bg2)">
   <div class="wrap">
     <span class="eyebrow" style="display:block;text-align:center">Screens</span>
-    <h2>실제 화면</h2>
-    <p class="sub">풀스크린/큰 필드에 배치하면 나침반과 화살표가, 작은 칸에서는 숫자만 자동 표시됩니다.</p>
+    <h2 data-i18n="shots.h2">실제 화면</h2>
+    <p class="sub" data-i18n="shots.sub">풀스크린/큰 필드에 배치하면 나침반과 화살표가, 작은 칸에서는 숫자만 자동 표시됩니다.</p>
     <div class="shots">
       <div class="shot"><img src="data:image/png;base64,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" alt="맞바람">
         <b class="h">맞바람 HEAD 21.6</b><span>빨강 화살표 ↓ · 정면 저항 · FL 4°</span></div>
@@ -193,21 +196,21 @@
 <section id="usage">
   <div class="wrap">
     <span class="eyebrow" style="display:block;text-align:center">How to use</span>
-    <h2>사용법 (설치 → 라이딩)</h2>
-    <p class="sub">처음 한 번만 설정하면 됩니다. 약 5분.</p>
+    <h2 data-i18n="usage.h2">사용법 (설치 → 라이딩)</h2>
+    <p class="sub" data-i18n="usage.sub">처음 한 번만 설정하면 됩니다. 약 5분.</p>
     <div class="steps">
-      <div class="step"><div><h4>1. 설치</h4>
-        <p>Connect IQ Store / Garmin Connect 앱에서 <b>Wind Field</b> 검색 후 설치. 설치 즉시 <b>14일 트라이얼</b>(전 기능)이 시작됩니다.</p></div></div>
-      <div class="step"><div><h4>2. 데이터 화면에 추가</h4>
-        <p>Edge에서 <code>활동 프로필 → 데이터 화면 → 필드 추가 → Connect IQ → Wind Field</code>. 화살표를 보려면 <b>풀스크린 또는 큰 필드</b>에 배치하세요.</p></div></div>
-      <div class="step"><div><h4>3. 날씨 동기화</h4>
-        <p>라이딩 전 휴대폰 <b>Garmin Connect 앱과 동기화</b>(또는 Wi-Fi). 그래야 풍향·풍속·기온이 채워집니다. 안 되면 화면에 <code>NO WIND DATA</code> 표시.</p></div></div>
-      <div class="step"><div><h4>4. (선택) 온라인 날씨 켜기 — 프리미엄</h4>
-        <p>더 신선한 데이터를 원하면 설정에서 <b>Online weather</b>를 켜고 <b>OpenWeatherMap API Key</b>를 입력. 위치 기반으로 15분마다 갱신·캐시합니다.</p></div></div>
-      <div class="step"><div><h4>5. 라이선스 키 입력 (구매 후)</h4>
-        <p>Garmin Connect 앱 → <code>기기 → Connect IQ → Wind Field → 설정 → License Key</code> 에 키(예: <code>WF-XXXXXX-YY</code>) 입력 후 동기화 → 프리미엄 영구 적용.</p></div></div>
-      <div class="step"><div><h4>6. 라이딩 시작</h4>
-        <p>야외에서 GPS 고정 + 이동 시작 → heading이 잡히면 화살표가 살아납니다. 위쪽이 내 진행 방향, 화살표가 바람.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u1h">1. 설치</h4>
+        <p data-i18n="u1p">Connect IQ Store / Garmin Connect 앱에서 <b>Wind Field</b> 검색 후 설치. 설치 즉시 <b>14일 트라이얼</b>(전 기능)이 시작됩니다.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u2h">2. 데이터 화면에 추가</h4>
+        <p data-i18n="u2p">Edge에서 <code>활동 프로필 → 데이터 화면 → 필드 추가 → Connect IQ → Wind Field</code>. 화살표를 보려면 <b>풀스크린 또는 큰 필드</b>에 배치하세요.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u3h">3. 날씨 동기화</h4>
+        <p data-i18n="u3p">라이딩 전 휴대폰 <b>Garmin Connect 앱과 동기화</b>(또는 Wi-Fi). 그래야 풍향·풍속·기온이 채워집니다. 안 되면 화면에 <code>NO WIND DATA</code> 표시.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u4h">4. (선택) 온라인 날씨 켜기 — 프리미엄</h4>
+        <p data-i18n="u4p">더 신선한 데이터를 원하면 설정에서 <b>Online weather</b>를 켜고 <b>OpenWeatherMap API Key</b>를 입력. 위치 기반으로 15분마다 갱신·캐시합니다.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u5h">5. 라이선스 키 입력 (구매 후)</h4>
+        <p data-i18n="u5p">Garmin Connect 앱 → <code>기기 → Connect IQ → Wind Field → 설정 → License Key</code> 에 키(예: <code>WF-XXXXXX-YY</code>) 입력 후 동기화 → 프리미엄 영구 적용.</p></div></div>
+      <div class="step"><div><h4 data-i18n="u6h">6. 라이딩 시작</h4>
+        <p data-i18n="u6p">야외에서 GPS 고정 + 이동 시작 → heading이 잡히면 화살표가 살아납니다. 위쪽이 내 진행 방향, 화살표가 바람.</p></div></div>
     </div>
   </div>
 </section>
@@ -216,8 +219,8 @@
 <section id="data" style="background:var(--bg2)">
   <div class="wrap">
     <span class="eyebrow" style="display:block;text-align:center">Data sources</span>
-    <h2>날씨·바람·기온은 어디서, 어떻게 가져오나</h2>
-    <p class="sub">지역/위치(위·경도)에 따라 두 가지 소스를 사용하고, 캐시로 배터리·데이터를 아낍니다.</p>
+    <h2 data-i18n="data.h2">날씨·바람·기온은 어디서, 어떻게 가져오나</h2>
+    <p class="sub" data-i18n="data.sub">지역/위치(위·경도)에 따라 두 가지 소스를 사용하고, 캐시로 배터리·데이터를 아낍니다.</p>
     <p class="tbl-hint">← 표를 좌우로 넘겨보세요 →</p>
     <div class="tbl"><table>
       <tr><th>구분</th><th>① 기기 내장 (기본)</th><th class="col-pro">② 온라인 (프리미엄, 선택)</th></tr>
@@ -255,8 +258,8 @@
 <section id="features">
   <div class="wrap">
     <span class="eyebrow" style="display:block;text-align:center">Plans</span>
-    <h2>무료로 시작, 필요하면 프리미엄</h2>
-    <p class="sub">핵심은 영원히 무료. 정밀 정보와 온라인 날씨는 프리미엄으로.</p>
+    <h2 data-i18n="plans.h2">무료로 시작, 필요하면 프리미엄</h2>
+    <p class="sub" data-i18n="plans.sub">핵심은 영원히 무료. 정밀 정보와 온라인 날씨는 프리미엄으로.</p>
     <p class="tbl-hint">← 표를 좌우로 넘겨보세요 →</p>
     <div class="tbl"><table>
       <tr><th>기능</th><th>FREE<br><span style="font-weight:400;color:var(--mut)">영구</span></th>
@@ -276,21 +279,21 @@
 <!-- PRICING -->
 <section id="plans" style="background:var(--bg2)">
   <div class="wrap">
-    <h2>요금</h2>
-    <p class="sub">구독 없음. 한 번 사면 평생. 기기를 바꿔도 같은 키로 다시 활성화.</p>
+    <h2 data-i18n="price.h2">요금</h2>
+    <p class="sub" data-i18n="price.sub">구독 없음. 한 번 사면 평생. 기기를 바꿔도 같은 키로 다시 활성화.</p>
     <div class="price">
       <span class="pill">평생 라이선스</span>
       <div class="amt"><s>$3</s>$1.99</div>
-      <div style="color:var(--tail);font-weight:700">🚀 런칭 기념 2주 한정가 — 이후 정상가 $3</div>
-      <div style="color:var(--mut);margin-top:4px">한 번 결제 · 평생 사용 · 자동결제 없음</div>
+      <div style="color:var(--tail);font-weight:700" data-i18n="price.launch">🚀 런칭 기념 2주 한정가 — 이후 정상가 $3</div>
+      <div style="color:var(--mut);margin-top:4px" data-i18n="price.once">한 번 결제 · 평생 사용 · 자동결제 없음</div>
       <ul>
-        <li>모든 프리미엄 기능 영구 개방</li>
-        <li>온라인 날씨 · 옆바람 수치 · yaw 각도</li>
-        <li>업데이트 무료 · 기기 변경 시 재사용</li>
-        <li>이메일로 라이선스 키 즉시 발급</li>
+        <li data-i18n="price.f1">모든 프리미엄 기능 영구 개방</li>
+        <li data-i18n="price.f2">온라인 날씨 · 옆바람 수치 · yaw 각도</li>
+        <li data-i18n="price.f3">업데이트 무료 · 기기 변경 시 재사용</li>
+        <li data-i18n="price.f4">이메일로 라이선스 키 즉시 발급</li>
       </ul>
-      <a class="btn" href="mailto:unlove60@gmail.com?subject=Wind%20Field%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%20%EA%B5%AC%EB%A7%A4&body=Wind%20Field%20%ED%94%84%EB%A6%AC%EB%AF%B8%EC%97%84%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4($3)%EB%A5%BC%20%EA%B5%AC%EB%A7%A4%ED%95%98%EA%B3%A0%20%EC%8B%B6%EC%8A%B5%EB%8B%88%EB%8B%A4." style="width:100%">지금 구매하고 키 받기</a>
-      <p class="note">먼저 써보고 싶다면? 설치하면 <b>14일 전체 기능 무료</b>.</p>
+      <a class="btn" href="mailto:unlove60@gmail.com?subject=Wind%20Field%20License%20Purchase&body=I%20would%20like%20to%20purchase%20a%20Wind%20Field%20premium%20license." style="width:100%" data-i18n="price.buy">지금 구매하고 키 받기</a>
+      <p class="note" data-i18n="price.trialnote">먼저 써보고 싶다면? 설치하면 <b>14일 전체 기능 무료</b>.</p>
     </div>
   </div>
 </section>
@@ -298,19 +301,19 @@
 <!-- FAQ -->
 <section id="faq">
   <div class="wrap" style="max-width:780px">
-    <h2>자주 묻는 질문</h2>
-    <details open><summary>바람·기온 데이터는 어디서 오나요?</summary>
-      <p>기본은 Garmin 기기에 동기화된 <b>Weather</b> 정보, 프리미엄에서 <b>OpenWeatherMap</b> 온라인을 위치 기반으로 추가 사용합니다. 자세한 비교는 위 "데이터 출처" 표 참고.</p></details>
-    <details><summary>온라인 날씨를 쓰면 데이터/배터리를 많이 먹나요?</summary>
-      <p>아니요. <b>15분 캐시 + 3km 이동 시에만 갱신 + 재요청 최소 60초</b>로 호출을 최소화합니다. JSON 응답도 작습니다.</p></details>
-    <details><summary>어떤 기기에서 동작하나요?</summary>
-      <p>현재 Edge 1030 Plus 대상입니다. Edge 1040·840 등도 손쉽게 추가 가능(Connect IQ 3.2.0+).</p></details>
-    <details><summary>트라이얼이 끝나면?</summary>
-      <p>설치 후 14일간 전 기능 개방. 만료되면 무료 기능(맞/뒷바람 화살표 + 수치)으로 돌아가고, 라이선스 키 입력 시 즉시 영구 복원됩니다.</p></details>
-    <details><summary>구독인가요?</summary>
-      <p>아니요. 한 번 결제하는 <b>평생 라이선스</b>입니다. 자동 결제가 없습니다.</p></details>
-    <details><summary>라이선스 키는 어떻게 입력하나요?</summary>
-      <p>Garmin Connect 앱 → 기기 → Connect IQ → Wind Field → 설정 → <code>License Key</code> 칸에 키 입력 후 동기화.</p></details>
+    <h2 data-i18n="faq.h2">자주 묻는 질문</h2>
+    <details open><summary data-i18n="faq.q1">바람·기온 데이터는 어디서 오나요?</summary>
+      <p data-i18n="faq.a1">기본은 Garmin 기기에 동기화된 <b>Weather</b> 정보, 프리미엄에서 <b>OpenWeatherMap</b> 온라인을 위치 기반으로 추가 사용합니다. 자세한 비교는 위 "데이터 출처" 표 참고.</p></details>
+    <details><summary data-i18n="faq.q2">온라인 날씨를 쓰면 데이터/배터리를 많이 먹나요?</summary>
+      <p data-i18n="faq.a2">아니요. <b>15분 캐시 + 3km 이동 시에만 갱신 + 재요청 최소 60초</b>로 호출을 최소화합니다. JSON 응답도 작습니다.</p></details>
+    <details><summary data-i18n="faq.q3">어떤 기기에서 동작하나요?</summary>
+      <p data-i18n="faq.a3">현재 Edge 1030 Plus 대상입니다. Edge 1040·840 등도 손쉽게 추가 가능(Connect IQ 3.2.0+).</p></details>
+    <details><summary data-i18n="faq.q4">트라이얼이 끝나면?</summary>
+      <p data-i18n="faq.a4">설치 후 14일간 전 기능 개방. 만료되면 무료 기능(맞/뒷바람 화살표 + 수치)으로 돌아가고, 라이선스 키 입력 시 즉시 영구 복원됩니다.</p></details>
+    <details><summary data-i18n="faq.q5">구독인가요?</summary>
+      <p data-i18n="faq.a5">아니요. 한 번 결제하는 <b>평생 라이선스</b>입니다. 자동 결제가 없습니다.</p></details>
+    <details><summary data-i18n="faq.q6">라이선스 키는 어떻게 입력하나요?</summary>
+      <p data-i18n="faq.a6">Garmin Connect 앱 → 기기 → Connect IQ → Wind Field → 설정 → <code>License Key</code> 칸에 키 입력 후 동기화.</p></details>
   </div>
 </section>
 
@@ -320,16 +323,82 @@
       <span class="dot"><svg viewBox="0 0 24 24" fill="#06122b"><path d="M12 3l7 9h-4v9h-6v-9H5z"/></svg></span>
       Wind Field
     </div>
-    <p>맞바람·뒷바람·체감온도 시각화 데이터 필드 · Garmin Connect IQ</p>
-    <p style="margin-top:6px">문의 · 라이선스 키 발급: <a href="mailto:unlove60@gmail.com" style="color:var(--tail)">unlove60@gmail.com</a></p>
+    <p data-i18n="footer.tag">맞바람·뒷바람·체감온도 시각화 데이터 필드 · Garmin Connect IQ</p>
+    <p style="margin-top:6px" data-i18n="footer.contact">구매 희망 · 문의 · 라이선스 키 발급은 <a href="mailto:unlove60@gmail.com" style="color:var(--tail)">unlove60@gmail.com</a> 으로 연락 주세요.</p>
     <div class="docs">
       <a href="docs/guide.html">📦 설치 가이드</a>
       <a href="docs/brochure.html">💳 수익화</a>
       <a href="docs/brochure.html">📈 시장 전략</a>
     </div>
-    <p style="margin-top:18px;color:#566085">© 2026 Wind Field. Garmin 및 Edge는 Garmin Ltd.의 상표입니다. 본 앱은 비공식 서드파티 제품입니다. 날씨 데이터: Garmin Weather / OpenWeatherMap.</p>
+    <p style="margin-top:18px;color:#566085" data-i18n="footer.copy">© 2026 Wind Field. Garmin 및 Edge는 Garmin Ltd.의 상표입니다. 본 앱은 비공식 서드파티 제품입니다. 날씨 데이터: Garmin Weather / OpenWeatherMap.</p>
   </div>
 </footer>
+
+<script>
+(function(){
+  // 영어 번역 사전(키 = data-i18n). 한국어는 페이지에서 자동 캡처.
+  var EN = {
+    "nav.how":"How it works","nav.shots":"Screens","nav.usage":"How to use","nav.data":"Data sources","nav.plans":"Pricing","nav.install":"Install",
+    "hero.pill":"GARMIN EDGE 1030 PLUS · DATA FIELD",
+    "hero.title":"Is the wind<br><b>with you or against you</b>,<br>at a glance.",
+    "hero.lead":"Compares your GPS heading with live wind to show <b style=\"color:var(--head)\">headwind</b>·<b style=\"color:var(--tail)\">tailwind</b>·crosswind as an arrow, plus <b>feels-like temp</b> — all on one screen. Pace and attack timing, as data.",
+    "hero.cta1":"Try free for 14 days","hero.cta2":"See how it works",
+    "hero.note":"All features open for 14 days on install · no card needed · lifetime license launch price $1.99 <s style=\"opacity:.6\">$3</s>",
+    "how.eyebrow":"How it works","how.h2":"How does it work?",
+    "how.sub":"Every second it compares the wind direction/speed from your device (or online) weather with the heading measured by GPS.",
+    "how.c1h":"Heading","how.c1p":"Reads your GPS course (heading) in real time and keeps the top of the screen as the way you are going.",
+    "how.c2h":"Wind + temp","how.c2p":"Pulls wind direction (where it blows from)/speed and air/feels-like temperature, converted to the rider frame.",
+    "how.c3h":"Impact view","how.c3p":"Decomposes head/tail/crosswind by relative angle. Arrow direction, color and length convey the strength instantly.",
+    "how.l1":"<b style=\"color:var(--head)\">↓ Red</b> Headwind (drag)","how.l2":"<b style=\"color:var(--tail)\">↑ Green</b> Tailwind (boost)",
+    "how.l3":"<b style=\"color:var(--orange)\">Diagonal orange</b> Cross + light head","how.l4":"Arrow length = wind strength",
+    "shots.h2":"Real screens","shots.sub":"On full-screen/large fields the compass and arrow show; in small cells only the numbers appear automatically.",
+    "usage.h2":"How to use (install → ride)","usage.sub":"Set it up once. About 5 minutes.",
+    "u1h":"1. Install","u1p":"Search <b>Wind Field</b> in the Connect IQ Store / Garmin Connect app and install. A <b>14-day trial</b> (all features) starts immediately.",
+    "u2h":"2. Add to a data screen","u2p":"On your Edge: <code>Activity Profile → Data Screens → Add Field → Connect IQ → Wind Field</code>. Place it on a <b>full-screen or large field</b> to see the arrow.",
+    "u3h":"3. Sync weather","u3p":"Before riding, <b>sync with the Garmin Connect phone app</b> (or Wi-Fi) so wind/temp get filled. Otherwise the screen shows <code>NO WIND DATA</code>.",
+    "u4h":"4. (Optional) Turn on online weather — Premium","u4p":"For fresher data, enable <b>Online weather</b> in settings and enter an <b>OpenWeatherMap API Key</b>. Refreshed/cached every 15 min by location.",
+    "u5h":"5. Enter license key (after purchase)","u5p":"Garmin Connect app → <code>Device → Connect IQ → Wind Field → Settings → License Key</code>, enter the key (e.g. <code>WF-XXXXXX-YY</code>) and sync → Premium applied permanently.",
+    "u6h":"6. Start riding","u6p":"Outdoors, get a GPS fix and start moving → once heading locks, the arrow comes alive. Top = your heading, arrow = the wind.",
+    "data.h2":"Where weather/wind/temp come from, and how","data.sub":"Uses two sources depending on your location (lat/lon), and saves battery/data with caching.",
+    "plans.h2":"Start free, go Premium if you need it","plans.sub":"The core is free forever. Precise info and online weather are Premium.",
+    "price.h2":"Pricing","price.sub":"No subscription. Buy once, keep forever. Reactivate with the same key even if you change devices.",
+    "price.launch":"🚀 Launch price for 2 weeks — $3 regular afterward","price.once":"One-time payment · lifetime use · no auto-billing",
+    "price.f1":"All premium features unlocked forever","price.f2":"Online weather · crosswind value · yaw angle",
+    "price.f3":"Free updates · reuse on a new device","price.f4":"License key issued instantly by email",
+    "price.buy":"Buy now & get your key","price.trialnote":"Want to try first? Install for <b>14 days of all features free</b>.",
+    "faq.h2":"Frequently asked questions",
+    "faq.q1":"Where does the wind/temp data come from?","faq.a1":"By default the <b>Weather</b> info synced to your Garmin device; Premium additionally uses <b>OpenWeatherMap</b> online by location. See the Data sources table above for details.",
+    "faq.q2":"Does online weather use a lot of data/battery?","faq.a2":"No. Calls are minimized with a <b>15-min cache + refresh only after 3 km of movement + 60 s minimum between requests</b>. The JSON response is small too.",
+    "faq.q3":"Which devices does it run on?","faq.a3":"Currently the Edge 1030 Plus. Edge 1040·840 and others can be added easily (Connect IQ 3.2.0+).",
+    "faq.q4":"What happens when the trial ends?","faq.a4":"All features are open for 14 days after install. When it expires it falls back to the free features (head/tailwind arrow + numbers); entering a license key restores Premium instantly and permanently.",
+    "faq.q5":"Is it a subscription?","faq.a5":"No. It is a one-time <b>lifetime license</b>. There is no recurring billing.",
+    "faq.q6":"How do I enter the license key?","faq.a6":"Garmin Connect app → Device → Connect IQ → Wind Field → Settings → <code>License Key</code>, enter the key and sync.",
+    "footer.tag":"Headwind·tailwind·feels-like temperature data field · Garmin Connect IQ",
+    "footer.contact":"To purchase, ask questions, or get a license key, contact <a href=\"mailto:unlove60@gmail.com\" style=\"color:var(--tail)\">unlove60@gmail.com</a>.",
+    "footer.copy":"© 2026 Wind Field. Garmin and Edge are trademarks of Garmin Ltd. This is an unofficial third-party app. Weather data: Garmin Weather / OpenWeatherMap."
+  };
+  var btn = document.getElementById('langBtn');
+  var nodes = document.querySelectorAll('[data-i18n]');
+  nodes.forEach(function(el){ el.setAttribute('data-ko', el.innerHTML); }); // 한국어 원문 보존
+  function apply(lang){
+    nodes.forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if(lang==='en' && EN[k]!=null){ el.innerHTML = EN[k]; }
+      else { el.innerHTML = el.getAttribute('data-ko'); }
+    });
+    document.documentElement.lang = lang;
+    if(btn){ btn.textContent = (lang==='en') ? '한국어' : 'EN'; }
+    try{ localStorage.setItem('wf-lang', lang); }catch(e){}
+  }
+  var saved='ko';
+  try{ saved = localStorage.getItem('wf-lang') || 'ko'; }catch(e){}
+  apply(saved);
+  if(btn){ btn.addEventListener('click', function(){
+    var cur = (document.documentElement.lang==='en') ? 'en':'ko';
+    apply(cur==='en' ? 'ko':'en');
+  }); }
+})();
+</script>
 
 </body>
 </html>
